@@ -1,0 +1,37 @@
+#!/bin/sh
+# this file needs to be added as a "pre-commit" file 
+# to your local .git/hooks/pre-commit
+# like this:
+# *1 - Command: cp pre-commit /home/myuser/project/.git/hooks/
+# *2 - Command: chmod +x /home/myuser/project/.git/hooks/pre-commit
+# *3 - Code as you normally would, and this script runs before each commit - AS A GOOD REMINDER.
+# 
+# -olealgo @ 2019
+
+echo "*** Vet du hva? Vi MÅ se på noe først ***"
+
+exec < /dev/tty
+
+while read -p "Har du dobbeltsjekket at KUN de riktige filene ble lagt til? (Y/n) " yn; do
+    case $yn in
+        [Yy] ) break;;
+        [Nn] ) echo "Sjekk at de riktige filene ble lagt til!"; exit 1;;
+        * ) echo "Vennligst svar med y (yes) eller n (no):" && continue;
+    esac
+done
+while read -p "Har du oppdatert dokumentasjonen? (Y/n) " yn; do
+    case $yn in
+        [Yy] ) break;;
+        [Nn] ) echo "For faen! Du må oppdatere eller legge til dokumentasjon!"; exit 1;;
+        * ) echo "Vennligst svar med y (yes) eller n (no):" && continue;
+    esac
+done
+while read -p "Vet du hvilke ISSUES / PULL REQUESTS du skal referere til? (Y/n) " yn; do
+    case $yn in
+        [Yy] ) break;;
+        [Nn] ) echo "GÅ TILBAKE OG SJEKK ISSUES / PULL REQUEST-#NUMMER!"; exit 1;;
+        * ) echo "Vennligst svar med y (yes) eller n (no):" && continue;
+    esac
+done
+
+exec <&-
